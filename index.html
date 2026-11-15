@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#070404">
+<title>Votre commande — une dernière étape</title>
+<script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+<link rel="preload" href="https://scripts.converteai.net/20a070d6-dd0d-4397-aab3-ecc0fb3a86c2/players/6af9fcfe504e9e302adf55eb/v4/player.js" as="script">
+<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
+<link rel="preload" href="https://cdn.converteai.net/20a070d6-dd0d-4397-aab3-ecc0fb3a86c2/6af9fcf32b748eff06510ea2/main.m3u8" as="fetch">
+<link rel="dns-prefetch" href="https://cdn.converteai.net">
+<link rel="dns-prefetch" href="https://scripts.converteai.net">
+<link rel="dns-prefetch" href="https://images.converteai.net">
+<link rel="dns-prefetch" href="https://license.vturb.com">
+<style>
+  /* ====== CONFIGURATION ====== */
+  :root{--red:#FF4A36;--red2:#C9230F;--bg:#070404;--panel:#141010;--ink:#F6EEE9;--muted:#A89890;--line:rgba(255,255,255,.09)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;background:radial-gradient(90% 50% at 50% 0%,rgba(224,48,30,.18),transparent 70%),var(--bg)}
+  .bar{background:linear-gradient(90deg,#1a0d0b,#2a0f0b,#1a0d0b);border-bottom:1px solid rgba(255,74,54,.25);text-align:center;padding:11px 14px;font-size:14px;font-weight:700}
+  .bar b{color:#7BDB86}
+  .bar span{color:var(--muted);font-weight:600}
+  .steps{display:flex;justify-content:center;gap:8px;padding:18px 16px 0;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+  .steps i{font-style:normal;display:flex;align-items:center;gap:6px}
+  .steps i::before{content:"";width:8px;height:8px;border-radius:50%;background:#3a2c28}
+  .steps i.done::before{background:#7BDB86}
+  .steps i.now{color:var(--ink)}
+  .steps i.now::before{background:var(--red);box-shadow:0 0 8px var(--red)}
+  main{max-width:520px;margin:0 auto;padding:16px 16px 40px}
+  h1{text-align:center;font-size:clamp(24px,6.4vw,32px);line-height:1.12;font-weight:850;letter-spacing:-.02em;margin:14px 0 8px}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{text-align:center;color:var(--muted);font-size:16px;line-height:1.4;margin-bottom:18px}
+  .player{position:relative;width:100%;max-width:400px;margin:0 auto;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;border:1px solid rgba(255,74,54,.35);box-shadow:0 0 0 6px rgba(255,74,54,.06),0 20px 60px rgba(0,0,0,.6),0 0 50px rgba(224,48,30,.18)}
+  .player video{width:100%;height:100%;display:block;object-fit:cover;background:#000}
+  .tap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(5,3,3,.55);border:0;color:#fff;cursor:pointer;font:inherit}
+  .tap .play{width:92px;height:92px;border-radius:50%;background:var(--red);display:grid;place-items:center;box-shadow:0 0 0 12px rgba(255,74,54,.18),0 0 40px rgba(255,74,54,.6);animation:pulse 1.8s ease-in-out infinite}
+  .tap .play::after{content:"";margin-left:7px;border-left:30px solid #fff;border-top:19px solid transparent;border-bottom:19px solid transparent}
+  .tap strong{font-size:18px;font-weight:800;text-shadow:0 2px 10px #000}
+  .tap small{font-size:13px;color:#ddd}
+  @keyframes pulse{50%{box-shadow:0 0 0 20px rgba(255,74,54,.06),0 0 50px rgba(255,74,54,.7)}}
+  .paused{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.35);border:0;cursor:pointer}
+  .paused.on{display:flex}
+  .paused span{width:76px;height:76px;border-radius:50%;background:rgba(255,74,54,.92);display:grid;place-items:center}
+  .paused span::after{content:"";margin-left:6px;border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent}
+  .prog{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.12)}
+  .prog i{display:block;height:100%;width:0;background:var(--red);box-shadow:0 0 8px var(--red)}
+  .sound{position:absolute;top:12px;right:12px;display:none;background:rgba(0,0,0,.6);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:8px 12px;font:700 13px/1 inherit;cursor:pointer}
+  .hint{text-align:center;color:var(--muted);font-size:13px;margin-top:12px}
+  .vwrap{max-width:400px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid rgba(255,74,54,.35);box-shadow:0 0 0 6px rgba(255,74,54,.06),0 20px 60px rgba(0,0,0,.6),0 0 50px rgba(224,48,30,.18);background:#000}
+  /* ====== OFFRE (révélée par le VTurb au moment du CTA) ====== */
+  .esconder{display:none}
+  #offer{margin-top:26px}
+  @keyframes in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .card{background:linear-gradient(180deg,#1a1110,#120d0c);border:1px solid rgba(255,74,54,.4);border-radius:22px;padding:22px 18px;text-align:center;box-shadow:0 0 40px rgba(224,48,30,.14)}
+  .card .k{font-size:12px;font-weight:800;letter-spacing:.24em;color:var(--red);text-transform:uppercase}
+  .card h2{font-size:24px;line-height:1.15;margin:10px 0 6px;font-weight:850}
+  .card ul{list-style:none;text-align:left;margin:16px 0 18px;display:grid;gap:10px}
+  .card li{position:relative;padding-left:28px;font-size:15px;line-height:1.35;color:#E6DAD4}
+  .card li::before{content:"✓";position:absolute;left:0;top:0;width:19px;height:19px;border-radius:50%;background:rgba(111,210,122,.16);color:#7BDB86;font-size:12px;font-weight:900;display:grid;place-items:center}
+  .price{display:flex;align-items:center;justify-content:center;gap:12px;margin:6px 0 4px}
+  .price s{color:var(--muted);font-size:22px;font-weight:700}
+  .price b{font-size:46px;font-weight:900;color:var(--ink);letter-spacing:-.02em}
+  .price em{font-style:normal;background:var(--red);color:#fff;font-weight:900;font-size:14px;border-radius:999px;padding:6px 10px}
+  .per{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .cta{display:block;width:100%;text-decoration:none;background:linear-gradient(180deg,#FF5A44,var(--red2));color:#fff;font-weight:900;font-size:19px;line-height:1.2;padding:20px 16px;border-radius:16px;box-shadow:0 12px 30px rgba(224,48,30,.45),inset 0 1px 0 rgba(255,255,255,.25)}
+  .cta small{display:block;font-size:13px;font-weight:700;opacity:.9;margin-top:5px}
+  .safe{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;color:var(--muted);font-weight:600}
+  .no{display:block;text-align:center;margin:22px auto 0;color:#8e7f79;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+  footer{max-width:520px;margin:0 auto;padding:20px 16px 34px;color:#6f625d;font-size:11.5px;line-height:1.5;text-align:center;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="bar"><b>✓ Commande confirmée</b> <span>· Ne fermez pas cette page</span></div>
+<div class="steps"><i class="done">Commande</i><i class="now">Étape finale</i><i>Accès</i></div>
+<main>
+  <h1>Avant de fermer cette page, <em>regardez cette courte vidéo</em></h1>
+  <p class="sub">Elle concerne une chose que vous faites probablement chaque nuit.</p>
+
+  <div class="vwrap">
+    <vturb-smartplayer id="vid-6af9fcfe504e9e302adf55eb" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 177.77777777777777% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer> <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/20a070d6-dd0d-4397-aab3-ecc0fb3a86c2/players/6af9fcfe504e9e302adf55eb/v4/player.js", s.async=!0,document.head.appendChild(s); </script>
+  </div>
+  <p class="hint">Durée : environ 4 minutes · activez le son</p>
+
+  <section id="offer" class="esconder" aria-live="polite">
+    <div class="card">
+      <div class="k">Offre réservée à cette page</div>
+      <h2>Red Protocoll · programme de 90 jours</h2>
+      <div class="price"><s>449 €</s><b>149 €</b><em>−67 %</em></div>
+      <div class="per">Paiement unique · moins de 1,70 € par jour</div>
+      <ul>
+        <li>Questionnaire de symptômes IPSS au Jour 1, puis aux jours 30, 60 et 90</li>
+        <li>Une mission courte chaque jour, directement sur votre téléphone</li>
+        <li>10 recettes avec des ingrédients de supermarché</li>
+        <li>Votre bilan chaque semaine et un rapport à montrer à votre médecin</li>
+      </ul>
+      <a class="cta" id="cta" href="#">Oui, j'ajoute le Red Protocoll à ma commande<small>Un clic · sans ressaisir votre carte</small></a>
+      <div class="safe"><span>🔒 Paiement sécurisé</span><span>✓ Même garantie que votre commande</span></div>
+    </div>
+    <a class="no" id="no" href="#">Non merci, je ne veux pas profiter de cette offre</a>
+  </section>
+</main>
+<footer>
+  Le Red Protocoll est un programme d'accompagnement des habitudes alimentaires et de vie. Il ne remplace pas un avis, un diagnostic ou un traitement médical, ni le dosage du PSA. Consultez votre médecin pour tout symptôme urinaire. Les résultats varient d'une personne à l'autre.
+</footer>
+
+<script>
+/* ====== À CONFIGURER ====== */
+var OFFER_URL   = "#";   // lien d'achat en un clic (upsell) de votre plateforme
+var DECLINE_URL = "#";   // lien "non merci" (page suivante du funnel)
+var delaySeconds = 249;  // seconde de la vidéo où l'offre apparaît (moment "un clic sur le bouton")
+/* ========================== */
+document.getElementById("cta").href = OFFER_URL;
+document.getElementById("no").href = DECLINE_URL;
+var player = document.querySelector("vturb-smartplayer");
+player.addEventListener("player:ready", function () {
+  player.displayHiddenElements(delaySeconds, [".esconder"], { persist: true });
+});
+</script>
+</body>
+</html>
